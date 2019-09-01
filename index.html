@@ -1,0 +1,85 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css"> -->
+    <script>
+        function play(a){
+            content=a.innerHTML;
+            let audio=document.getElementById('player');
+            if(content=="Pause!")
+            {
+                audio.pause();
+            }
+            else if(audio.set==0)
+            {
+
+                audio.play();
+                
+            }
+            else
+            {
+                audio.pause();
+            }
+        }
+        function unavailable(a){
+            let m=document.getElementById('play');
+            m.innerHTML="Not Available";
+            m.disabled=true;
+
+        }
+        function playme(a){
+            console.log('playing');
+            let audio=document.getElementById('player');
+            if(audio.set==0)
+            {
+            
+            document.getElementById('play').innerHTML="Pause!";
+            audio.volume=1;
+            }
+        }
+
+        function pauseme(a){
+            let audio=document.getElementById('player');
+            if(audio.volume==1)
+            {
+            audio.set=1;
+            console.log("pausing");
+            document.getElementById('play').innerHTML="Play!";
+            audio.volume=0;
+            audio.play();
+            }
+            else
+            {
+                audio.volume=1;
+                console.log("play in pause")
+                document.getElementById('play').innerHTML="Pause!";
+                audio.play();
+            }
+        }
+        if("mediaSession" in navigator)
+        {
+            
+            navigator.mediaSession.setActionHandler('play',playme);
+            navigator.mediaSession.setActionHandler('pause',pauseme);
+        }
+    </script>
+</head>
+<body>
+    <button id="play" onclick="play(this);" >Play</button>
+    <audio id="player">
+        <!-- <source src="b.mp3"/> -->
+        <source src="http://78.129.224.19:37388/;.mp3" onerror="unavailable(this);" />
+    </audio>
+    <script>
+        var audio=document.getElementById("player");
+        audio.set=0;
+        audio.onplay=playme;
+        audio.onpause=pauseme;
+
+    </script>
+    <!-- <script src="main.js"></script> -->
+</body>
+</html>
